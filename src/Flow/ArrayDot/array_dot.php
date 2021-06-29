@@ -175,7 +175,14 @@ function array_dot_get(array $array, string $path)
 
             foreach ($subSteps as $subStep) {
                 /** @psalm-suppress MixedAssignment */
-                $results[] = array_dot_get($arraySlice, \trim($subStep));
+                $subSteps = array_dot_steps(\trim($subStep));
+                $lastSubStep = \end($subSteps);
+
+                if (\strpos($lastSubStep, '?') === 0 && $lastSubStep !== '?*') {
+                    $lastSubStep = \ltrim($lastSubStep, '?');
+                }
+
+                $results[$lastSubStep] = array_dot_get($arraySlice, \trim($subStep));
             }
 
             return $results;
