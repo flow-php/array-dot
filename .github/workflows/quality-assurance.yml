@@ -14,3 +14,5 @@ jobs:
   static-analyze:
     name: "Static Analyze"
     uses: aeon-php/actions/.github/workflows/composer-script-static-analyze.yaml@main
+    with:
+      php-version: 8.1
